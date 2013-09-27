@@ -18,7 +18,9 @@
             buttonLabel: 'Upload',
             buttonClass: '',
             hasTextInput: true,
-            elementToAttachFileName: null
+            elementToAttachFileName: null,
+            _template: null,
+            _data: {}
         };
 
         this.$input = $(element);
@@ -57,7 +59,26 @@
         },
 
         getMarkup: function () {
-            var markup = "<div class='bootstrap-file-uploader row-fluid'>";
+            var markup = '';
+
+            if (this.options._template) {
+                this.checkUnderscoreJs();
+
+                _.extend(this.options._data, {
+                    buttonLabel: this.options.buttonLabel,
+                    buttonClass: this.options.buttonClass
+                });
+
+                var tpl = $(this.options._template).html()
+
+                markup = _.template(tpl, {
+                    data: this.options._data
+                });
+
+                return markup;
+            }
+
+            markup = "<div class='bootstrap-file-uploader row-fluid'>";
 
             if (this.options.hasTextInput) {
                 markup += "<input type='text' class='uploader-input span8'></input>";
@@ -69,6 +90,12 @@
             markup += "</div>";
 
             return markup;
+        },
+
+        checkUnderscoreJs: function() {
+            if (typeof(_) == "undefined") { 
+                throw("You defined an _template and underscore.js is missing.");
+            }
         }
 
     };
