@@ -42,7 +42,9 @@
                 float: 'left'
             })
 
-            this.$el.on('click', 'input, .btn', $.proxy(this.click, this));
+            var btnCls = this.options.buttonClass || 'btn';
+
+            this.$el.on('click', 'input, .' + btnCls, $.proxy(this.click, this));
         },
 
         click: function (ev) {
