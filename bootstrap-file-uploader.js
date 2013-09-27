@@ -94,7 +94,7 @@
 
         checkUnderscoreJs: function() {
             if (typeof(_) == "undefined") { 
-                throw("You defined an _template and underscore.js is missing.");
+                throw("You defined an _template but underscore.js is missing.");
             }
         }
 
